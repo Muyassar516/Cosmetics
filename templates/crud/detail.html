@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ cosmetic.title }} - Detail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            padding: 30px;
+            max-width: 600px;
+            margin: 40px auto;
+            color: #444;
+        }
+        .product-detail {
+            background: #fff;
+            border: 3px solid #007bff;
+            border-radius: 10px;
+            padding: 25px 30px;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+            text-align: center;
+        }
+        .product-detail img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .product-detail h1 {
+            color: #0056b3;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .product-detail p.description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #28a745;
+            margin-bottom: 30px;
+        }
+        .back-link {
+            display: inline-block;
+            font-weight: 600;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1rem;
+            border: 2px solid #007bff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .back-link:hover {
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+        }
+        .like-button {
+    background-color: transparent;
+    border: 2px solid red;
+    color: red;
+    padding: 5px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.like-button i {
+    pointer-events: none;
+}
+
+/* Yurakcha ichi oq rangda (like qilinmagan) */
+.like-button:not(.liked) i {
+    color: white;
+    text-shadow: 0 0 2px red;
+    /* Qizil atrof uchun border allaqachon bor */
+}
+
+/* Like bosilganda (liked) */
+.like-button.liked {
+    background-color: red;
+    color: white;
+}
+
+/* Bosilganda hovuz uchun (hover) */
+.like-button:hover {
+    background-color: red;
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+    <div class="product-detail">
+        <h1>{{ cosmetic.title }}</h1>
+        <img src="{{ cosmetic.image.url }}" alt="{{ cosmetic.title }}" />
+        <p class="description">{{ cosmetic.description }}</p>
+        <p class="price">Narxi: ${{ cosmetic.price }}</p>
+
+        <a href="{% url 'get' %}" class="back-link">← Orqaga</a>
+        <h1>{{ cosmetic.title }}</h1>
+<p>{{ cosmetic.description }}</p>
+
+<form method="post" action="{% url 'toggle_like' cosmetic.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="user" value="{{ request.user.username }}">
+    <button type="submit" class="like-button {% if has_liked %}liked{% endif %}" type="submit">
+        <i class="fa-solid fa-heart"></i>
+        ({{ cosmetic.like_count }})
+    </button>
+</form>
+
+
+<h2>Comments ({{ cosmetic.comment_count }})</h2>
+<ul>
+    {% for comment in cosmetic.comments.all %}
+        <li><b>{{ comment.user }}</b>: {{ comment.text }}</li>
+    {% endfor %}
+</ul>
+
+    </div>
+</body>
+</html>
