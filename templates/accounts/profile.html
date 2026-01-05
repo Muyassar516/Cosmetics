@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div class="text-center mb-6">
+        <a href="{% url 'home' %}" class="btn btn-outline-light shadow-sm" style="border-radius: 25px; padding: 10px 25px; font-weight: 600;">
+            <i class="fa fa-home"></i> Asosiyga qaytish
+        </a>
+    </div>
+    <title>Мой профиль</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Фон с анимацией частиц --- */
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #f6d365, #fda085);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Частицы */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-200px) translateX(50px) scale(0.5); opacity: 0.6; }
+            100% { transform: translateY(0) translateX(-50px) scale(1); opacity: 1; }
+        }
+
+        /* Профиль */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-card img {
+            border: 5px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-edit, .btn-favorites {
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-favorites:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background-color: #ff6b81;
+            color: #fff;
+        }
+        .btn-my-products {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.btn-my-products:hover {
+    background-color: #28a745;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+    </style>
+</head>
+<body>
+    <!-- Частицы -->
+    <script>
+        const body = document.body;
+        for(let i=0; i<30; i++){
+            const div = document.createElement('div');
+            div.classList.add('particle');
+            div.style.width = div.style.height = Math.random()*15 + 5 + 'px';
+            div.style.left = Math.random()*100 + 'vw';
+            div.style.top = Math.random()*100 + 'vh';
+            div.style.animationDuration = (5 + Math.random()*10) + 's';
+            body.appendChild(div);
+        }
+    </script>
+
+    <div class="container my-5">
+        <div class="profile-card mx-auto" style="max-width: 900px;">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img src="{% if profile.image %}{{ profile.image.url }}{% else %}{% static 'default.png' %}{% endif %}"
+                         alt="Profile Image" class="img-fluid rounded-circle" width="180">
+                </div>
+                <div class="col-md-8">
+                   <h2>{{ profile.nickname|default:profile.user.username }}</h2>
+
+<p><strong>Ism:</strong> {{ profile.user.first_name|default:"Ko'rsatilmagan" }}</p>
+<p><strong>Familiya:</strong> {{ profile.user.last_name|default:"Ko'rsatilmagan" }}</p>
+<p><strong>Email:</strong> {{ profile.user.email|default:"Ko'rsatilmagan" }}</p>
+<p><strong>Telefon:</strong> {{ profile.user.phone_number|default:"Ko'rsatilmagan" }}</p>
+<p><strong>O'zim haqimda:</strong> {{ profile.bio|default:"Foydalanuvchi o'z haqida ma'lumot qo'shmagan" }}</p>
+
+<div class="mt-3 d-flex gap-2 flex-wrap">
+    <!-- Редактировать профиль -->
+    <a href="{% url 'update_profile' %}" class="btn btn-outline-primary btn-edit">
+        <i class="fa fa-pen"></i> Tahrirlash
+    </a>
+
+    <!-- Избранное -->
+    <a href="{% url 'favorites' %}" class="btn btn-outline-danger btn-favorites">
+        <i class="fa fa-heart"></i> Sevimlilar
+    </a>
+
+   {% if user.is_authenticated and user.role == "publisher" %}
+    <a href="{% url 'user_products' %}" class="btn btn-outline-success btn-my-products">
+        <i class="fa fa-box-open"></i> Mening mahsulotlarim
+    </a>
+{% endif %}
+
+
+</div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

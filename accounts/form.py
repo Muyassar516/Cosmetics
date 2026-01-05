@@ -1,6 +1,6 @@
 from captcha.fields import CaptchaField
+from .models import CustomUser, Profile, RoleChoice
 from django import forms
-from .models import CustomUser, Profile
 
 
 class UserForm(forms.ModelForm):
@@ -35,6 +35,11 @@ class UserForm(forms.ModelForm):
     #     #     user.save()
     #     return CustomUser.objects.create_user(*args,**kwargs)
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['nickname', 'bio', 'email', 'image']
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=40)
@@ -50,3 +55,42 @@ class UserProfileForm(forms.ModelForm):
         if not email.endswith('@gmail.com'):
             raise forms.ValidationError("Faqat @gmail.com email manzillariga ruxsat bor!")
         return email
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['nickname', 'image', 'bio']
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'phone_number']
+
+
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    role = forms.ChoiceField(
+        choices=[(RoleChoice.READER, 'Xaridor'), (RoleChoice.PUBLISHER, 'Sotuvchi')],
+        initial=RoleChoice.READER,
+        widget=forms.RadioSelect
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'phone_number',
+            'password',
+            'email',
+            'role',
+        ]
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user

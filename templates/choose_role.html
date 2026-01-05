@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Выбор роли</title>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #fdeff4, #f9f3ff);
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .role-card {
+      background: white;
+      padding: 40px;
+      border-radius: 24px;
+      width: 380px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .role-card h2 {
+      margin-bottom: 10px;
+      color: #3b2d4a;
+      font-weight: 600;
+    }
+
+    .role-card p {
+      color: #7a6a8a;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .role-btn {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .reader {
+      background: #f3e8ff;
+      color: #5b2d8b;
+    }
+
+    .reader:hover {
+      background: #e4d3ff;
+      transform: translateY(-2px);
+    }
+
+    .publisher {
+      background: #ffe4ec;
+      color: #8b2d4f;
+    }
+
+    .publisher:hover {
+      background: #ffcddc;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="role-card">
+    <h2>Кто вы?</h2>
+    <p>Выберите роль, чтобы мы показали нужный контент</p>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <button class="role-btn reader" type="submit" name="role" value="reader">
+        Я читатель
+      </button>
+
+      <button class="role-btn publisher" type="submit" name="role" value="publisher">
+        Я издатель
+      </button>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -1,135 +1,392 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <title>{{ cosmetic.title }} - Detail</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            padding: 30px;
-            max-width: 600px;
-            margin: 40px auto;
-            color: #444;
-        }
-        .product-detail {
-            background: #fff;
-            border: 3px solid #007bff;
-            border-radius: 10px;
-            padding: 25px 30px;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
-            text-align: center;
-        }
-        .product-detail img {
-            max-width: 250px;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .product-detail h1 {
-            color: #0056b3;
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        .product-detail p.description {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            color: #555;
-        }
-        .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #28a745;
-            margin-bottom: 30px;
-        }
-        .back-link {
-            display: inline-block;
-            font-weight: 600;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 1rem;
-            border: 2px solid #007bff;
-            padding: 8px 18px;
-            border-radius: 6px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .back-link:hover {
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-        }
-        .like-button {
-    background-color: transparent;
-    border: 2px solid red;
-    color: red;
-    padding: 5px 12px;
-    font-size: 16px;
-    border-radius: 8px;
+<meta charset="UTF-8">
+<title>{{ cosmetic.title }} - Детали</title>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #fff0f6;
+    padding: 20px;
+}
+.product-detail {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+}
+.product-detail img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+h1 {
+    font-family: 'Great Vibes', cursive;
+    color: #e60073;
+    text-align: center;
+}
+.price {
+    font-size: 1.5rem;
+    color: #28a745;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+.like-button {
+    background: transparent;
+    border: none;
+    color: #e60073;
+    font-size: 1.5rem;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+    transition: transform 0.2s;
+}
+.like-button.liked i {
+    color: red;
+    transform: scale(1.3);
 }
 
-.like-button i {
+/* Сердечки */
+.heart {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: red;
+    border-radius: 50%;
     pointer-events: none;
+    z-index: 9999;
+}
+.heart::before, .heart::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: red;
+    border-radius: 50%;
+}
+.heart::before { top: -6px; left: 0; }
+.heart::after { top: 0; left: -6px; }
+
+.comments { margin-top: 30px; }
+.comment { border-bottom: 1px solid #ddd; padding: 5px 0; }
+
+/* Кнопка Главная */
+.btn-home-center {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 30px;
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    text-decoration: none;
+}
+.btn-home-center:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    color: #fff;
+}
+    /* Блок рекомендаций */
+.recommendations {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 2px solid #e0e0e0;
+    text-align: center;
 }
 
-/* Yurakcha ichi oq rangda (like qilinmagan) */
-.like-button:not(.liked) i {
-    color: white;
-    text-shadow: 0 0 2px red;
-    /* Qizil atrof uchun border allaqachon bor */
+.recommendations h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #6a11cb;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+/* Карусель рекомендаций */
+.rec-carousel-container {
+    position: relative;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 2px solid #e0e0e0;
 }
 
-/* Like bosilganda (liked) */
-.like-button.liked {
-    background-color: red;
-    color: white;
+.recommendations h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #6a11cb;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-/* Bosilganda hovuz uchun (hover) */
-.like-button:hover {
-    background-color: red;
-    color: white;
+/* Сама карусель */
+.rec-carousel {
+    display: flex;
+    gap: 1.2rem; /* расстояние между карточками ~1.2см */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
 }
 
-    </style>
+.rec-card {
+    flex: 0 0 240px; /* шире карточки */
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.rec-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.rec-card a {
+    display: block;
+    font-weight: 600;
+    color: #2575fc;
+    text-decoration: none;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.rec-card span {
+    display: block;
+    font-weight: 600;
+    margin-top: 5px;
+    color: #28a745;
+}
+
+.rec-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* Стрелки карусели */
+.rec-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.8);
+    border: none;
+    font-size: 2rem;
+    color: #6a11cb;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+    z-index: 10;
+}
+
+.rec-arrow:hover {
+    background: rgba(106,17,203,0.9);
+    color: #fff;
+}
+
+.rec-arrow.left { left: -20px; }
+.rec-arrow.right { right: -20px; }
+
+/* Убираем скроллбар */
+.rec-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+</style>
 </head>
 <body>
-    <div class="product-detail">
-        <h1>{{ cosmetic.title }}</h1>
-        <img src="{{ cosmetic.image.url }}" alt="{{ cosmetic.title }}" />
-        <p class="description">{{ cosmetic.description }}</p>
-        <p class="price">Narxi: ${{ cosmetic.price }}</p>
 
-        <a href="{% url 'get' %}" class="back-link">← Orqaga</a>
-        <h1>{{ cosmetic.title }}</h1>
-<p>{{ cosmetic.description }}</p>
+<!-- Кнопка Главная по центру -->
 
-<form method="post" action="{% url 'toggle_like' cosmetic.id %}">
-    {% csrf_token %}
-    <input type="hidden" name="user" value="{{ request.user.username }}">
-    <button type="submit" class="like-button {% if has_liked %}liked{% endif %}" type="submit">
-        <i class="fa-solid fa-heart"></i>
-        ({{ cosmetic.like_count }})
-    </button>
-</form>
+<a href="{% url 'home' %}" class="btn-home-center">🏠 Главная</a>
 
-
-<h2>Comments ({{ cosmetic.comment_count }})</h2>
-<ul>
-    {% for comment in cosmetic.comments.all %}
-        <li><b>{{ comment.user }}</b>: {{ comment.text }}</li>
-    {% endfor %}
-</ul>
-
+<div class="product-detail">
+    <!-- Информация об авторе и времени создания -->
+    <div class="product-meta text-center mb-3">
+        <span>Создано: <b>{{ cosmetic.created_by.username }}</b></span> |
+        <span>{{ cosmetic.created_at|date:"d M Y, H:i" }}</span>
     </div>
+
+    <h1>{{ cosmetic.title }}</h1>
+    <img src="{{ cosmetic.image.url }}" alt="{{ cosmetic.title }}">
+    <p>{{ cosmetic.description }}</p>
+    <p class="price">Цена: ${{ cosmetic.price }}</p>
+
+    <!-- Лайк -->
+    <form method="post" class="like-form" action="{% url 'toggle_like' cosmetic.id %}">
+        {% csrf_token %}
+        <button type="submit" class="like-button {% if has_liked %}liked{% endif %}">
+            <i class="fa-solid fa-heart"></i> (<span class="like-count">{{ cosmetic.favorited_by.count }}</span>)
+        </button>
+    </form>
+
+    <!-- Комментарии -->
+    <div class="comments">
+        <h3>Комментарии ({{ comments.count }})</h3>
+        <ul class="list-group mb-3">
+            {% for comment in comments %}
+            <li class="list-group-item">
+                <b>{{ comment.user.username }}</b>: {{ comment.text }}
+                <br>
+                <small class="text-muted">{{ comment.created_at }}</small>
+            </li>
+            {% empty %}
+            <li class="list-group-item">Пока нет комментариев.</li>
+            {% endfor %}
+        </ul>
+        <script>
+const carousel = document.querySelector('.rec-carousel');
+const btnLeft = document.querySelector('.rec-arrow.left');
+const btnRight = document.querySelector('.rec-arrow.right');
+
+btnLeft.addEventListener('click', () => {
+    carousel.scrollBy({ left: -260, behavior: 'smooth' }); // листаем назад
+});
+btnRight.addEventListener('click', () => {
+    carousel.scrollBy({ left: 260, behavior: 'smooth' }); // листаем вперёд
+});
+</script>
+
+<!-- Рекомендации -->
+<div class="recommendations">
+    <h6>Рекомендации</h6>
+    <div class="rec-carousel-container">
+        <button class="rec-arrow left">&#10094;</button>
+        <div class="rec-carousel">
+            {% for rec in cosmetic.recommendations.all %}
+                <div class="rec-card">
+                    {% if rec.image %}
+                        <img src="{{ rec.image.url }}" alt="{{ rec.title }}">
+                    {% else %}
+                        <img src="{% static 'images/no-image.png' %}" alt="{{ rec.title }}">
+                    {% endif %}
+                    <a href="{% url 'cosmetic_detail' rec.id %}" title="{{ rec.title }}">
+                        {{ rec.title }}
+                    </a>
+                    <span>$ {{ rec.price }}</span>
+                </div>
+            {% empty %}
+                <p>Похожих товаров пока нет</p>
+            {% endfor %}
+        </div>
+        <button class="rec-arrow right">&#10095;</button>
+    </div>
+</div>
+<form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <textarea name="text" class="form-control" placeholder="Оставьте комментарий" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<style>
+
+/* Элегантная кнопка "Главная" */
+.btn-home-center {
+    display: inline-block;
+    text-align: center;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* стильный синий-фиолетовый градиент */
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 25px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 1rem;
+}
+.btn-home-center:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+/* Информация об авторе */
+.product-meta {
+    font-size: 0.9rem;
+    color: #555;
+}
+.product-meta b {
+    color: #6a11cb; /* акцент на имя автора */
+}
+
+</style>
+
+
+<script>
+const likeForm = document.querySelector('.like-form');
+likeForm.addEventListener('submit', function(event){
+    event.preventDefault();
+    const btn = likeForm.querySelector('button');
+    const willLike = !btn.classList.contains('liked');
+
+    fetch(likeForm.action, {
+        method: 'POST',
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+    })
+    .then(response => response.json())
+    .then(data => {
+        btn.classList.toggle('liked', data.liked);
+        btn.querySelector('.like-count').textContent = data.count;
+
+        if(willLike){
+            for(let i=0;i<12;i++){
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                const colors = ['#FF3B30','#FF9500','#FFCC00','#34C759','#5AC8FA','#5856D6','#FF2D55'];
+                heart.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+
+                const rect = btn.getBoundingClientRect();
+                heart.style.left = rect.left + rect.width/2 + window.scrollX + 'px';
+                heart.style.top = rect.top + rect.height/2 + window.scrollY + 'px';
+
+                const x = (Math.random()-0.5)*50;
+                const y = -(Math.random()*30 + 20);
+                const rotate = (Math.random()-0.5)*360;
+
+                heart.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';
+                document.body.appendChild(heart);
+
+                setTimeout(()=>{ heart.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(0.5)`; heart.style.opacity = 0; }, 50);
+                setTimeout(()=>heart.remove(), 1000);
+            }
+        }
+    });
+});
+</script>
+
 </body>
 </html>

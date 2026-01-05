@@ -1,314 +1,497 @@
-
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
-
-
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Beautiflie</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-
-      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-
-<!-- Custom style -->
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-
-<!-- Responsive -->
-<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-
-<!-- Favicon -->
-<link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
-
-<!-- Scrollbar Custom CSS -->
-<link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
-
-<!-- Font Awesome (external CDN, static kerak emas) -->
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-
-<!-- Google Fonts (external CDN, static kerak emas) -->
-<link href="https://fonts.googleapis.com/css?family=Great+Vibes|Open+Sans:400,700&display=swap&subset=latin-ext" rel="stylesheet">
-
-<!-- Owl Carousel styles -->
-<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-
-<!-- Fancybox CSS (external CDN) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-
-<!-- Gijgo Datepicker CSS (external CDN) -->
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-
-   </head>
-
-   <body>
-      <!-- header section start -->
-      <div class="header_section">
-         <div class="container-fluid">
-       <nav class="navbar navbar-light bg-light justify-content-between">
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="index.html">Home</a>
-     <a href="products.html">Products</a>
-     <a href="about.html">About</a>
-     <a href="client.html">Client</a>
-     <a href="contact.html">Contact</a>
-  </div>
-{% block content %}
-{% endblock %}
-  <span class="toggle_icon" onclick="openNav()">
-    <img src="{% static 'images/toggle-icon.png' %}" alt="Toggle Icon">
-  </span>
-
-  <a class="logo" href="{% url 'home' %}">
-    <img src="{% static 'images/logo.png' %}" alt="Logo">
-  </a>
-
-  <div class="login_text d-flex align-items-center">
-    <ul class="list-inline mb-0 mr-3">
-      <li class="list-inline-item">
-        <a href="#"><img src="{% static 'images/user-icon.png' %}" alt="User Icon"></a>
-      </li>
-      <li class="list-inline-item">
-        <a href="#"><img src="{% static 'images/bag-icon.png' %}" alt="Bag Icon"></a>
-      </li>
-      <li class="list-inline-item">
-        <a href="#"><img src="{% static 'images/search-icon.png' %}" alt="Search Icon"></a>
-      </li>
-    </ul>
-
-    {% if user.is_authenticated %}
-      <a href="{% url 'logout' %}" class="btn btn-outline-danger ml-2">Logout</a>
-    {% else %}
-      <a href="{% url 'login' %}" class="btn btn-outline-primary ml-2">Login</a>
-      <a href="{% url 'register' %}" class="btn btn-primary ml-2">Register</a>
-    {% endif %}
-  </div>
-</nav>
-
-         </div>
-      </div>
-      <!-- header section end -->
-      <!-- banner section start -->
-
-      <!-- product section end -->
-      <!-- about section start -->
-
-<div class="about_section layout_padding">
-   <div class="container">
-      <div class="about_section_main">
-         <div class="row">
-            <div class="col-md-6">
-               <div class="about_taital_main">
-                  <h1 class="about_taital">About Our beauty sotore</h1>
-                  <p class="about_text">
-                     labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...
-                  </p>
-                  <div class="readmore_bt"><a href="#">Read More</a></div>
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div>
-                  <img src="{% static 'images/about-img.png' %}" class="image_3" alt="About Image">
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-<!-- customer section start -->
-<div class="customer_section layout_padding">
-   <div class="container">
-      <div class="row">
-         <div class="col-sm-12">
-            <h1 class="customer_taital">What says customers</h1>
-         </div>
-      </div>
-      <div id="main_slider" class="carousel slide" data-ride="carousel">
-         <div class="carousel-inner">
-            <div class="carousel-item active">
-               <div class="client_section_2">
-                  <div class="client_main">
-                     <div class="client_left">
-                        <div class="client_img">
-                           <img src="{% static 'images/client-img.png' %}" alt="Client">
-                        </div>
-                     </div>
-                     <div class="client_right">
-                        <h3 class="name_text">Jonyro</h3>
-                        <p class="dolor_text">consectetur adipiscing elit...</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item">
-               <div class="client_section_2">
-                  <div class="client_main">
-                     <div class="client_left">
-                        <div class="client_img">
-                           <img src="{% static 'images/client-img.png' %}" alt="Client">
-                        </div>
-                     </div>
-                     <div class="client_right">
-                        <h3 class="name_text">Jonyro</h3>
-                        <p class="dolor_text">consectetur adipiscing elit...</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item">
-               <div class="client_section_2">
-                  <div class="client_main">
-                     <div class="client_left">
-                        <div class="client_img">
-                           <img src="{% static 'images/client-img.png' %}" alt="Client">
-                        </div>
-                     </div>
-                     <div class="client_right">
-                        <h3 class="name_text">Jonyro</h3>
-                        <p class="dolor_text">consectetur adipiscing elit...</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
-            <i class="fa fa-angle-left"></i>
-         </a>
-         <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
-            <i class="fa fa-angle-right"></i>
-         </a>
-      </div>
-   </div>
-</div>
- <!-- customer section end -->
-      <!-- contact section start -->
-
-<div class="contact_section layout_padding">
-   <div class="container">
-      <div class="row">
-         <div class="col-md-6">
-            <h1 class="contact_taital">Get In Touch</h1>
-            <p class="contact_text">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-         </div>
-         <div class="col-md-6">
-            <div class="contact_main">
-               <div class="contact_bt"><a href="#">Contact Form</a></div>
-               <div class="newletter_bt"><a href="#">Newletter</a></div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="map_main">
-      <div class="map-responsive">
-         <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=Eiffel+Tower+Paris+France"
-            width="600" height="400" frameborder="0" style="border:0; width: 100%;" allowfullscreen=""></iframe>
-      </div>
-   </div>
-</div>
-<!-- contact section end -->
-
-<!-- footer section start -->
-<div class="footer_section layout_padding">
-   <div class="container">
-      <div class="footer_logo">
-         <a href="index.html">
-            <img src="{% static 'images/footer-logo.png' %}" alt="Footer Logo">
-         </a>
-      </div>
-      <div class="contact_section_2">
-         <div class="row">
-            <div class="col-sm-4">
-               <h3 class="address_text">Contact Us</h3>
-               <div class="address_bt">
-                  <ul>
-                     <li>
-                        <a href="#">
-                           <i class="fa fa-map-marker" aria-hidden="true"></i><span class="padding_left10">Address : Loram Ipusm</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="#">
-                           <i class="fa fa-phone" aria-hidden="true"></i><span class="padding_left10">Call : +01 1234567890</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="#">
-                           <i class="fa fa-envelope" aria-hidden="true"></i><span class="padding_left10">Email : demo@gmail.com</span>
-                        </a>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-            <div class="col-sm-4">
-               <div class="footer_logo_1">
-                  <a href="index.html">
-                     <img src="{% static 'images/footer-logo.png' %}" alt="Footer Logo 1">
-                  </a>
-               </div>
-               <p class="dummy_text">commodo consequat. Duis aute irure dolor in reprehenderit in voluptate...</p>
-            </div>
-            <div class="col-sm-4">
-               <div class="main">
-                  <h3 class="address_text">Best Products</h3>
-                  <p class="ipsum_text">dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="social_icon">
-         <ul>
-            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-            <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-         </ul>
-      </div>
-   </div>
-</div>
-
-      <!-- footer section end -->
-      <!-- copyright section start -->
-      <div class="copyright_section">
-         <div class="container">
-            <p class="copyright_text">2020 All Rights Reserved. Design by <a href="https://html.design">Free html  Templates</a></p>
-         </div>
-      </div>
-      <!-- copyright section end -->
-      <!-- Javascript files-->
-     <script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/popper.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
-<script src="{% static 'js/plugin.js' %}"></script>
-      <!-- sidebar -->
-
-<!-- Local JS fayllar -->
-<script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
-<script src="{% static 'js/custom.js' %}"></script>
 <script src="{% static 'js/owl.carousel.js' %}"></script>
 
-<!-- CDN orqali yuklanadigan tashqi JS fayllar (static kerak emas) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 
-         function openNav() {
-           document.getElementById("mySidenav").style.width = "100%";
-         }
-         
-         function closeNav() {
-           document.getElementById("mySidenav").style.width = "0";
-         }
-      </script> 
-   </body>
+<html lang="en">
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Title & SEO -->
+    <title>Beautiflie</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Open+Sans:400,700&display=swap&subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-light bg-light justify-content-between">
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="index.html">Home</a>
+                    <a href="products.html">Products</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="{% url 'create' %}">Create</a>
+                </div>
+
+                <span class="toggle_icon" onclick="openNav()">
+                    <img src="{% static 'images/toggle-icon.png' %}" alt="Toggle Icon">
+                </span>
+
+                <a class="logo" href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo">
+                </a>
+<div class="login_text d-flex align-items-center gap-3">
+
+
+
+     <div class="search-wrapper position-relative">
+        <a href="#" id="searchIcon">
+            <img src="{% static 'images/search-icon.png' %}" alt="Search Icon" class="search-icon">
+        </a>
+        <form id="searchForm" action="{% url 'get' %}" method="get">
+            <input type="text" name="q" placeholder="Искать..." class="form-control" required>
+        </form>
+    </div>
+
+</div>
+
+<style>
+/* Поиск */
+.search-wrapper {
+    position: relative;
+}
+
+.search-wrapper form {
+    display: none;
+}
+
+.search-wrapper input {
+    transition: all 0.3s;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+}
+
+/* ПК: форма справа */
+@media(min-width: 768px) {
+    .search-wrapper form {
+        position: absolute;
+        top: 50%;
+        left: 110%;
+        transform: translateY(-50%);
+        width: 300px;
+    }
+}
+
+/* Мобильный: форма вниз */
+@media(max-width: 767px) {
+    .search-wrapper form {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 180px;
+    }
+}
+    .profile-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.2s;
+}
+
+.profile-link:hover .profile-img {
+    transform: scale(1.1);
+}
+
+</style>
+
+<script>
+const searchIcon = document.getElementById('searchIcon');
+const searchForm = document.getElementById('searchForm');
+
+searchIcon.addEventListener('click', function(e){
+    e.preventDefault();
+    if(searchForm.style.display === "block") {
+        searchForm.style.display = "none";
+    } else {
+        searchForm.style.display = "block";
+        searchForm.querySelector('input').focus();
+    }
+});
+
+// Закрытие поиска при клике вне
+document.addEventListener('click', function(e){
+    if(!searchForm.contains(e.target) && !searchIcon.contains(e.target)){
+        searchForm.style.display = "none";
+    }
+});
+</script>
+
+
+<script>
+const searchIcon = document.getElementById('searchIcon');
+const searchForm = document.getElementById('searchForm');
+
+searchIcon.addEventListener('click', function(e){
+    e.preventDefault();
+    if(searchForm.style.display === "block") {
+        searchForm.style.display = "none";
+    } else {
+        searchForm.style.display = "block";
+        searchForm.querySelector('input').focus();
+    }
+});
+
+// Закрытие поиска при клике вне
+document.addEventListener('click', function(e){
+    if(!searchForm.contains(e.target) && !searchIcon.contains(e.target)){
+        searchForm.style.display = "none";
+    }
+});
+</script>
+
+                        <!-- Language selector -->
+                        <li class="list-inline-item">
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <select name="language" class="form-select form-select-sm">
+                                    <option value="uz">O'zbekcha</option>
+                                    <option value="ru">Русский</option>
+                                    <option value="en">English</option>
+                                </select>
+                                <input type="submit" class="btn btn-sm btn-outline-secondary mt-1" value="Change">
+                            </form>
+                        </li>
+                    </ul>
+
+                   <div class="auth-buttons d-flex gap-2">
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn btn-gradient-danger">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-gradient-primary">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-gradient-secondary">Register</a>
+    {% endif %}
+</div>
+
+<style>.product_box {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    padding: 8px 10px; /* меньше внутренние отступы для компактности */
+}
+
+.product_box:hover {
+    transform: translateY(-8px); /* усилили движение */
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2); /* более заметная тень */
+}
+
+.product_box h4 {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.5rem;
+    color: #6a1b9a;
+    text-align: center;
+    margin-bottom: 4px; /* меньше отступ */
+}
+
+.product_box p {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 4px; /* компактнее */
+}
+
+.product_box .price {
+    font-weight: bold;
+    color: #28a745;
+    text-align: center;
+    margin-top: 6px; /* чуть меньше сверху */
+    font-size: 1.1rem;
+}
+
+</style>
+
+<!-- Кнопка Домика по центру -->
+<div class="header-center">
+    <a href="{% url 'home' %}" class="btn-home-center">🏠</a>
+</div>
+
+<style>
+/* Центрируем кнопку и сдвигаем немного вверх */
+.header-center {
+    text-align: center;
+    margin: 0 0 20px 0; /* сверху 0, снизу 20px */
+}
+
+/* Стиль кнопки */
+.btn-home-center {
+    display: inline-block;
+    font-size: 1.5rem; /* размер значка */
+    line-height: 1;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Hover эффект */
+.btn-home-center:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .header-center {
+        margin: 5px 0 15px 0;
+    }
+}
+</style>
+
+
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+<!-- Product Section -->
+<section class="product_section_2 layout_padding container">
+    <div class="row">
+        {% for cosmetic in page_obj %}
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="product_box border rounded p-3 shadow-sm position-relative h-100 d-flex flex-column">
+
+                <!-- Кнопка "Подробнее" сверху фото -->
+                <div class="position-absolute top-0 start-50 translate-middle-x mt-2">
+                    <a href="{% url 'cosmetic_detail' cosmetic.id %}"
+                       class="btn btn-sm text-white fw-bold"
+                       style="background: linear-gradient(135deg, #7F00FF, #E100FF); border-radius: 25px; padding: 5px 15px;">
+                        Подробнее
+                    </a>
+                </div>
+
+                {% if cosmetic.image %}
+                    <img src="{{ cosmetic.image.url }}" class="img-fluid mb-3 rounded" alt="{{ cosmetic.title }}">
+                {% else %}
+                    <img src="{% static 'images/no-image.png' %}" class="img-fluid mb-3 rounded" alt="{{ cosmetic.title }}">
+                {% endif %}
+
+                <!-- Красивый титул -->
+                <h4 class="bursh_text fw-bold text-center mb-2" style="font-family: 'Brush Script MT', cursive; font-size: 1.4rem; color: #6a1b9a;">
+                    {{ cosmetic.title }}
+                </h4>
+
+                <p class="lorem_text flex-grow-1 text-muted text-center">{{ cosmetic.description|truncatewords:12 }}</p>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h5 class="text-success mb-0">Price ${{ cosmetic.price }}</h5>
+                    <div class="recommendations mt-3 p-2 border-top">
+            <h6 class="text-center mb-2" style="color: #6a11cb; font-weight: 600;">Рекомендации</h6>
+            <ul class="list-unstyled mb-0">
+                {% for rec in cosmetic.recommendations.all %}
+                    <li class="text-center mb-1">
+                        <a href="{% url 'cosmetic_detail' rec.id %}" class="text-decoration-none" style="color: #2575fc;">
+                            {{ rec.title|truncatewords:5 }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="text-center text-muted" style="font-size: 0.9rem;">Похожих товаров пока нет</li>
+                {% endfor %}
+            </ul>
+        </div>
+                </div>
+
+                <div class="mt-3 d-flex justify-content-center gap-2">
+                    <a href="{% url 'update' cosmetic.id %}" class="btn btn-outline-primary btn-sm">✏️ Update</a>
+                    <form action="{% url 'delete' cosmetic.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">🗑 Delete</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<!-- Пагинация -->
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Назад</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Вперед</span></li>
+        {% endif %}
+    </ul>
+</nav>
+
+</section>
+
+
+    <!-- About Section -->
+    <section class="about_section layout_padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="about_taital">About Our Beauty Store</h1>
+                    <p class="about_text">Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...</p>
+                    <a href="#" class="readmore_bt btn btn-primary">Read More</a>
+                </div>
+                <div class="col-md-6">
+                    <img src="{% static 'images/about-img.png' %}" class="img-fluid" alt="About Image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Section -->
+    <section class="customer_section layout_padding">
+        <div class="container">
+            <h1 class="customer_taital text-center mb-4 mt-5">What Says Customers</h1>
+            <div id="main_slider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for i in "123" %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="client_section_2 d-flex align-items-center">
+                            <div class="client_left">
+                                <img src="{% static 'images/client-img.png' %}" alt="Client" class="img-fluid">
+                            </div>
+                            <div class="client_right">
+                                <h3 class="name_text">Customer {{ forloop.counter }}</h3>
+                                <p class="dolor_text">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 class="contact_taital">Get In Touch</h1>
+                    <p class="contact_text">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
+                </div>
+                <div class="col-md-6 d-flex flex-column gap-2">
+                    <a href="#" class="contact_bt btn btn-primary">Contact Form</a>
+                    <a href="#" class="newletter_bt btn btn-outline-primary">Newsletter</a>
+                </div>
+            </div>
+        </div>
+        <div class="map_main mt-4">
+<iframe
+    src="https://www.google.com/maps?q=Shayhontohur,+Navoiy+ko'chasi+59,+School&output=embed"
+    width="100%"
+    height="400"
+    style="border:0;"
+    allowfullscreen
+></iframe>
+              </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h3 class="address_text">Contact Us</h3>
+                    <ul>
+                        <li><i class="fa fa-map-marker"></i> Address: shayxontohur rayon, xadra mahallasi, 59-maktab</li>
+                        <li><i class="fa fa-phone"></i> Call: +99 1234567890</li>
+                        <li><i class="fa fa-envelope"></i> Email: muyassar@gmail.com</li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <img src="{% static 'images/footer-logo.png' %}" alt="Footer Logo">
+                    <p>Commodo consequat. Duis aute irure dolor in reprehenderit in voluptate...</p>
+                </div>
+                <div class="col-sm-4">
+                    <h3>Best Products</h3>
+                    <p>Dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p>
+                </div>
+            </div>
+
+            <div class="social_icon mt-3 text-center">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="copyright_section text-center mt-3">
+            <p>2025 All Rights Reserved. Design by ChatGPT😁, but code was written by M.M.M <a href="https://html.design">Free HTML Templates</a></p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/plugin.js' %}"></script>
+    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"></script>
+
+    <script>
+        function openNav() { document.getElementById("mySidenav").style.width = "100%"; }
+        function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+    </script>
+</body>
 </html>

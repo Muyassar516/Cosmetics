@@ -1,19 +1,173 @@
-{% extends 'index.html' %}
-{% block content %}
-<form method="post">
-  {% csrf_token %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorya | Kirsh</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        background: #fff0f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
 
-  {% if user.is_authenticated %}
-    {% if user.profile %}
-      {{ user.profile.nickname }}
-    {% else %}
-      <p>Profil mavjud emas</p>
-    {% endif %}
-  {% else %}
-    <a href="{% url 'login' %}">Login</a>
-  {% endif %}
+    .auth-container {
+        display: flex;
+        width: 800px;
+        max-width: 95%;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        overflow: hidden;
+    }
 
-  <p>{{ form.as_p }}</p>
-  <button type="submit" class="btn btn-primary">Jo'natmoq</button>
-</form>
-{% endblock %}
+    .auth-left {
+        width: 50%;
+        background: url('{% static "images/main logo.png" %}') center/cover no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 30px;
+        color: #fff;
+        text-align: center;
+        position: relative;
+    }
+
+    .auth-left::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1;
+    }
+
+    .auth-left h1, .auth-left p {
+        position: relative;
+        z-index: 2;
+    }
+
+    .auth-left h1 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 50px;
+        margin-bottom: 10px;
+    }
+
+    .auth-left p {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .auth-right {
+        width: 50%;
+        padding: 50px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .auth-right h2 {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: #D61C4E;
+        text-align: center;
+    }
+
+    .auth-right form p {
+        margin-bottom: 15px;
+    }
+
+    .auth-right input, .auth-right button {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .auth-right input:focus {
+        border-color: #D61C4E;
+        box-shadow: 0 0 8px rgba(214,28,78,0.3);
+        outline: none;
+    }
+
+    .auth-right button {
+        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .auth-right button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .auth-right .extra {
+        font-size: 14px;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .auth-right .extra a {
+        color: #D61C4E;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .auth-container {
+            flex-direction: column;
+        }
+        .auth-left, .auth-right {
+            width: 100%;
+        }
+        .auth-left {
+            min-height: 250px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-left">
+        <h1>Sorya</h1>
+        <p>Ayollar uchun go‘zallik va parvarish dunyosi</p>
+    </div>
+
+    <div class="auth-right">
+        {% if user.is_authenticated %}
+            {% if user.profile %}
+                <h2>Salom, {{ user.profile.nickname }}!</h2>
+                <p>Siz sistemaga kirib bo'ldingiz</p>
+                <div class="extra">
+                    <a href="{% url 'logout' %}">Chiqish</a>
+                </div>
+            {% else %}
+                <p>Profil mavjud emas!!!</p>
+            {% endif %}
+        {% else %}
+            <h2>Kirish</h2>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Kirish</button>
+            </form>
+            <div class="extra">
+                Akkaunt yo'qmi? <a href="{% url 'register' %}">Ro'yhatdan o'tish</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

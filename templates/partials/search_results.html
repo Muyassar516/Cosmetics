@@ -1,0 +1,20 @@
+{% load static %}
+
+{% for product in products %}
+<div class="search-item p-2 border rounded mb-2 bg-white shadow-sm d-flex align-items-center">
+    {% if product.image %}
+    <img src="{{ product.image.url }}"
+         alt="{{ product.title }}"
+         class="rounded"
+         style="width:40px; height:40px; object-fit:cover;">
+    {% else %}
+    <img src="{% static 'images/no-image.png' %}"
+         alt="No image"
+         class="rounded"
+         style="width:40px; height:40px; object-fit:cover;">
+    {% endif %}
+    <span class="ms-2">{{ product.title }}</span>
+</div>
+{% empty %}
+<div class="p-2 text-muted">Ничего не найдено</div>
+{% endfor %}

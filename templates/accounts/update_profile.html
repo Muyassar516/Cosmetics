@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profilni yangilash</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #ffe6f0, #fff0f5);
+    min-height: 100vh;
+    padding: 20px 0;
+}
+
+/* Card */
+.profile-card {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: auto;
+    padding: 40px;
+}
+
+/* Sarlavha */
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #D61C4E;
+    text-align: center;
+}
+
+/* Sektsiya sarlavhalari */
+h4 {
+    font-weight: 600;
+    color: #D61C4E;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #D61C4E33;
+    padding-bottom: 5px;
+}
+
+/* Inputlar */
+.form-control, .form-select {
+    border-radius: 15px;
+    padding: 12px 14px;
+    border: 1px solid #f0cde6;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #D61C4E;
+    box-shadow: 0 0 8px rgba(214,28,78,0.2);
+    outline: none;
+}
+
+/* Telegram-uslubidagi rasm joyi */
+.image-upload-wrapper {
+    width: 150px;
+    height: 150px;
+    margin-top: 10px;
+    cursor: pointer;
+    position: relative;
+}
+.image-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 2px dashed #D61C4E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s;
+    background-color: #fff0f5;
+}
+.image-preview:hover {
+    border-color: #ff69b4;
+    background-color: #ffe6f0;
+}
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.image-preview span {
+    position: absolute;
+    font-size: 14px;
+    color: #D61C4E;
+    font-weight: 600;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* Tugma */
+button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 15px;
+    border: none;
+    background: linear-gradient(135deg, #ff9ac1, #ff69b4);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+button:hover {
+    transform: translateY(-2px);
+}
+
+/* Xatolar */
+ul.errors {
+    margin-bottom: 15px;
+    padding-left: 20px;
+    color: #D61C4E;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .row-cols-responsive {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="profile-card">
+    <h1>Profilni yangilash</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if u_form.errors or p_form.errors %}
+        <ul class="errors">
+            {% for field in u_form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for field in p_form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in u_form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="row row-cols-responsive g-4">
+            <!-- Foydalanuvchi ma'lumotlari -->
+
+                {% for field in u_form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+
+
+            <!-- Profil ma'lumotlari -->
+            <div class="col-md-6">
+                <h4>Profil ma'lumotlari</h4>
+                {% for field in p_form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {% if field.name == "image" %}
+                        <div class="image-upload-wrapper" onclick="document.getElementById('imageInput').click()">
+                            <input type="file" name="{{ field.name }}" id="imageInput" class="form-control" onchange="previewImage()" style="display:none;">
+                            <div class="image-preview" id="previewContainer">
+                                {% if field.value %}
+                                    <img id="previewImg" src="{{ field.value.url }}" alt="Profil rasmi">
+                                    <span id="previewText"></span>
+                                {% else %}
+                                    <img id="previewImg" src="{% static 'images/user-icon.png' %}" alt="Profil rasmi">
+                                    <span id="previewText">Rasm qo‘shish</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit">Saqlash</button>
+    </form>
+</div>
+
+<script>
+function previewImage() {
+    const input = document.getElementById('imageInput');
+    const previewImg = document.getElementById('previewImg');
+    const previewText = document.getElementById('previewText');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            previewText.textContent = "";
+        }
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        previewImg.src = "{% static 'images/user-icon.png' %}";
+        previewText.textContent = "Rasm qo‘shish";
+    }
+}
+</script>
+
+</body>
+</html>

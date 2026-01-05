@@ -1,9 +1,236 @@
-{% extends 'index.html' %}
-{% block content%}
-<form method="post">
-  {% csrf_token %}
-  <p>{{ form.as_p }}</p>
-  <button type='submit' class="btn btn-primary">Jo'natmoq</button>
-</form>
+<!DOCTYPE html>
+{% load static %}
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorya | Ro‘yxatdan o‘tish</title>
 
-{% endblock %}
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: #fff0f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.auth-container {
+    width: 460px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+h2 {
+    text-align: center;
+    color: #D61C4E;
+    margin-bottom: 25px;
+}
+
+/* inputlar */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+input:focus {
+    border-color: #D61C4E;
+    box-shadow: 0 0 6px rgba(214,28,78,0.3);
+    outline: none;
+}
+
+/* radio */
+.role-box {
+    margin: 15px 0 20px;
+}
+
+.role-box p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.role-box label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* tugma */
+button {
+    width: 100%;
+    padding: 13px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="auth-container">
+    <h2>Ro‘yxatdan o‘tish</h2>
+
+    <form method="post">
+        {% csrf_token %}
+{% if form.errors %}
+    <ul class="errors">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+      <!-- USERNAME -->
+<div class="form-group">
+    <label for="username">Foydalanuvchi nomi</label>
+    <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="sorya123"
+        required
+        class="form-control"
+    >
+</div>
+
+<!-- PASSWORD -->
+<div class="form-group">
+    <label for="password">Parol</label>
+    <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Kamida 8 ta belgi"
+        required
+        class="form-control"
+    >
+</div>
+
+        <!-- ROLE -->
+        <!-- ROLE -->
+<div class="role-box">
+    <p>Kim sifatida ro‘yxatdan o‘tasiz?</p>
+
+    <label>
+        <input type="radio" name="role" value="reader" onclick="showBuyer()" required>
+        Xaridor (sotib olaman)
+    </label>
+
+    <label>
+        <input type="radio" name="role" value="publisher" onclick="showSeller()">
+        Sotuvchi (sotaman)
+    </label>
+</div>
+<!-- BUYER FIELDS -->
+<div id="buyer-fields" style="display:none;">
+    <div class="form-group">
+        <label for="buyer_first_name">Ismingiz</label>
+        <input type="text" id="buyer_first_name" name="first_name" placeholder="Muyassar" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="buyer_email">Email</label>
+        <input type="email" id="buyer_email" name="email" placeholder="muyassar@gmail.com" class="form-control">
+    </div>
+</div>
+        <!-- SELLER -->
+<div id="seller-fields" style="display:none;">
+
+    <div class="form-group">
+        <label for="first_name">Ismingiz</label>
+        <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            placeholder="Muyassar"
+            class="form-control"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="last_name">Familiyangiz</label>
+        <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            placeholder="Mirzaahmedova"
+            class="form-control"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="muyassar@gmail.com"
+            class="form-control"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Telefon raqam</label>
+        <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="+998901234567"
+            class="form-control"
+        >
+    </div>
+
+</div>
+
+
+        <button type="submit">Ro‘yxatdan o‘tish</button>
+    </form>
+</div>
+
+<script>
+function showBuyer() {
+    document.getElementById("buyer-fields").style.display = "block";
+    document.getElementById("seller-fields").style.display = "none";
+}
+
+function showSeller() {
+    document.getElementById("seller-fields").style.display = "block";
+    document.getElementById("buyer-fields").style.display = "none";
+}
+</script>
+
+</body>
+</html>

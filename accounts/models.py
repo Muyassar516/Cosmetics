@@ -1,8 +1,12 @@
 import random
 from datetime import timedelta
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from cosmetic.models import Cosmetic
+from django.conf import settings
 
 class RoleChoice(models.TextChoices):
     ADMIN=('admin','Admin')
@@ -26,12 +30,27 @@ class Code(models.Model):
     code=models.CharField(max_length=6)
     expire_date=models.DateField(default=get_expire_time)
 
+
 class Profile(models.Model):
-    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE,related_name='profile')
-    image = models.ImageField(default='default.png',upload_to='profile_pics')
-    nickname = models.CharField(max_length=11,blank=True,null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    image = models.ImageField(default='default.png', upload_to='profile_pics')
+    nickname = models.CharField(max_length=11, blank=True, null=True)
     bio = models.TextField(blank=True)
     email = models.EmailField(blank=True, null=True)
+    favorites = models.ManyToManyField(Cosmetic, blank=True, related_name='favorited_by')
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"
+
+
+@receiver(post_save, sender=CustomUser)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    else:
+        instance.profile.save()
+
+
 
 
 
