@@ -435,61 +435,8 @@ body {
     font-size: 14px;
   }
 }
-/* ===== MOBILE SEARCH FIX ===== */
-@media (max-width: 768px) {
 
-    .login_text {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-    }
 
-    .search-wrapper {
-        width: 100%;
-        max-width: 100%;
-        margin-top: 8px;
-    }
-
-    .search-wrapper input {
-        width: 100%;
-        font-size: 14px;
-        padding: 6px 8px;
-    }
-
-    .search-wrapper button {
-        padding: 6px 8px;
-        font-size: 14px;
-    }
-
-    /* текст скрываем, иконки оставляем */
-    .favorites-text,
-    .profile-link span {
-        display: none;
-    }
-
-    .profile-link img {
-        width: 28px;
-        height: 28px;
-    }
-}
-/* FIX: profile text size jump */
-.profile-link,
-.profile-link span {
-    font-size: 14px;
-    line-height: 1.2;
-    transform: none !important;
-    transition: none !important;
-}
-
-/* disable hover scaling on mobile */
-@media (max-width: 768px) {
-    .profile-link:hover,
-    .profile-link:active,
-    .profile-link:focus {
-        font-size: 14px !important;
-        transform: none !important;
-    }
-}
 
 </style>
 
