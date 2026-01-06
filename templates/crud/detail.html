@@ -239,7 +239,7 @@ h1 {
         <div class="rec-carousel-container">
             <button class="rec-arrow left">&#10094;</button>
             <div class="rec-carousel">
-                {% for rec in cosmetic.recommendations.all %}
+                {% for rec in recommendations %}
                 <div class="rec-card">
                     {% if rec.image %}
                     <img src="{{ rec.image.url }}" alt="{{ rec.title }}">

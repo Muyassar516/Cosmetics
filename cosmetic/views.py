@@ -99,7 +99,6 @@ def delete_cosmetic(request, pk):
 
     return render(request, 'crud/delete.html', {'cosmetic': cosmetic})
 
-@login_required
 def toggle_like(request, cosmetic_id):
     cosmetic = get_object_or_404(Cosmetic, id=cosmetic_id)
     profile = request.user.profile
@@ -134,11 +133,17 @@ def detail_cosmetic(request, cosmetic_id):
 
     has_liked = cosmetic in request.user.profile.favorites.all()
 
+
+    recommendations = Cosmetic.objects.exclude(id=cosmetic.id)[:5]
+    if not recommendations:
+        recommendations = Cosmetic.objects.exclude(id=cosmetic.id)[:5]
+
     context = {
         'cosmetic': cosmetic,
         'comments': comments,
         'form': form,
-        'has_liked': has_liked
+        'has_liked': has_liked,
+        'recommendations': recommendations,   # <== shu qo‘shildi
     }
     return render(request, 'crud/detail.html', context)
 
