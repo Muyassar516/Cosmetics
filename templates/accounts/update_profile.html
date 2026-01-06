@@ -22,7 +22,7 @@ body {
     background: #fff;
     border-radius: 25px;
     box-shadow: 0 12px 35px rgba(0,0,0,0.1);
-    max-width: 900px;
+    max-width: 500px;
     margin: auto;
     padding: 40px;
 }
@@ -52,6 +52,7 @@ h4 {
     border: 1px solid #f0cde6;
     transition: all 0.3s ease;
     font-size: 14px;
+    width: 100%;
 }
 .form-control:focus, .form-select:focus {
     border-color: #D61C4E;
@@ -63,13 +64,14 @@ h4 {
 .image-upload-wrapper {
     width: 150px;
     height: 150px;
-    margin-top: 10px;
+    margin: 0 auto 15px auto;
     cursor: pointer;
     position: relative;
 }
 .image-preview {
     width: 100%;
-    height: 100%;
+    max-width: 150px;
+    height: 150px;
     border-radius: 20px;
     border: 2px dashed #D61C4E;
     display: flex;
@@ -79,6 +81,7 @@ h4 {
     position: relative;
     transition: all 0.3s;
     background-color: #fff0f5;
+    margin: 0 auto;
 }
 .image-preview:hover {
     border-color: #ff69b4;
@@ -97,6 +100,11 @@ h4 {
     font-weight: 600;
     text-align: center;
     pointer-events: none;
+}
+
+/* Form row */
+.form-group {
+    margin-bottom: 20px;
 }
 
 /* Tugma */
@@ -126,9 +134,17 @@ ul.errors {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .row-cols-responsive {
-        flex-direction: column;
+@media (max-width: 500px) {
+    .profile-card {
+        padding: 20px;
+    }
+    .image-upload-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+    .image-preview {
+        max-width: 120px;
+        height: 120px;
     }
 }
 </style>
@@ -158,43 +174,40 @@ ul.errors {
         </ul>
         {% endif %}
 
-        <div class="row row-cols-responsive g-4">
-            <!-- Foydalanuvchi ma'lumotlari -->
-
-                {% for field in u_form %}
-                <div class="form-group">
-                    <label>{{ field.label }}</label>
-                    {{ field }}
-                </div>
-                {% endfor %}
-
-
-            <!-- Profil ma'lumotlari -->
-            <div class="col-md-6">
-                <h4>Profil ma'lumotlari</h4>
-                {% for field in p_form %}
-                <div class="form-group">
-                    <label>{{ field.label }}</label>
-                    {% if field.name == "image" %}
-                        <div class="image-upload-wrapper" onclick="document.getElementById('imageInput').click()">
-                            <input type="file" name="{{ field.name }}" id="imageInput" class="form-control" onchange="previewImage()" style="display:none;">
-                            <div class="image-preview" id="previewContainer">
-                                {% if field.value %}
-                                    <img id="previewImg" src="{{ field.value.url }}" alt="Profil rasmi">
-                                    <span id="previewText"></span>
-                                {% else %}
-                                    <img id="previewImg" src="{% static 'images/user-icon.png' %}" alt="Profil rasmi">
-                                    <span id="previewText">Rasm qo‘shish</span>
-                                {% endif %}
-                            </div>
-                        </div>
+        <!-- Profil rasmi -->
+        <div class="form-group">
+            <label>Profil rasmi</label>
+            <div class="image-upload-wrapper" onclick="document.getElementById('imageInput').click()">
+                <input type="file" name="image" id="imageInput" class="form-control" onchange="previewImage()" style="display:none;">
+                <div class="image-preview" id="previewContainer">
+                    {% if p_form.image.value %}
+                        <img id="previewImg" src="{{ p_form.image.value.url }}" alt="Profil rasmi">
+                        <span id="previewText"></span>
                     {% else %}
-                        {{ field }}
+                        <img id="previewImg" src="{% static 'images/user-icon.png' %}" alt="Profil rasmi">
+                        <span id="previewText">Rasm qo‘shish</span>
                     {% endif %}
                 </div>
-                {% endfor %}
             </div>
         </div>
+
+        <!-- Foydalanuvchi ma'lumotlari -->
+        {% for field in u_form %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+
+        <!-- Profil ma'lumotlari -->
+        {% for field in p_form %}
+            {% if field.name != "image" %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endif %}
+        {% endfor %}
 
         <button type="submit">Saqlash</button>
     </form>

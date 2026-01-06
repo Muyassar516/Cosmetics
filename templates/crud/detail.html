@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ru">
+<html lang="uz">
 <head>
 <meta charset="UTF-8">
-<title>{{ cosmetic.title }} - Детали</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ cosmetic.title }} - Tafsilotlar</title>
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,21 +12,20 @@
 body {
     font-family: 'Open Sans', sans-serif;
     background-color: #fff0f6;
-    padding: 20px;
+    padding: 15px;
 }
 .product-detail {
     max-width: 700px;
     margin: 0 auto;
     background: #fff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    position: relative;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .product-detail img {
     max-width: 100%;
     border-radius: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 h1 {
     font-family: 'Great Vibes', cursive;
@@ -33,14 +33,14 @@ h1 {
     text-align: center;
 }
 .price {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: #28a745;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .back-link {
     display: inline-block;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #007bff;
     text-decoration: none;
 }
@@ -48,17 +48,15 @@ h1 {
     background: transparent;
     border: none;
     color: #e60073;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     cursor: pointer;
     position: relative;
     transition: transform 0.2s;
 }
 .like-button.liked i {
     color: red;
-    transform: scale(1.3);
+    transform: scale(1.2);
 }
-
-/* Сердечки */
 .heart {
     position: absolute;
     width: 12px;
@@ -79,168 +77,131 @@ h1 {
 .heart::before { top: -6px; left: 0; }
 .heart::after { top: 0; left: -6px; }
 
-.comments { margin-top: 30px; }
+.comments { margin-top: 20px; }
 .comment { border-bottom: 1px solid #ddd; padding: 5px 0; }
 
-/* Кнопка Главная */
 .btn-home-center {
     display: block;
     text-align: center;
-    margin: 20px auto;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    margin: 15px auto;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: #fff;
     font-weight: 600;
-    padding: 10px 30px;
-    border-radius: 50px;
+    padding: 10px 25px;
+    border-radius: 25px;
     border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
     font-size: 1rem;
     text-decoration: none;
 }
 .btn-home-center:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    background: linear-gradient(135deg, #ff7eb3, #ff758c);
-    color: #fff;
-}
-    /* Блок рекомендаций */
-.recommendations {
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 2px solid #e0e0e0;
-    text-align: center;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
 }
 
+.product-meta {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+}
+.product-meta b { color: #6a11cb; }
+
+.recommendations {
+    margin-top: 20px;
+    text-align: center;
+}
 .recommendations h6 {
-    font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     font-size: 1.2rem;
     color: #6a11cb;
-    margin-bottom: 20px;
-    letter-spacing: 0.5px;
+    margin-bottom: 15px;
 }
-/* Карусель рекомендаций */
+
 .rec-carousel-container {
     position: relative;
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 2px solid #e0e0e0;
+    margin-top: 10px;
 }
-
-.recommendations h6 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
-    font-size: 1.3rem;
-    color: #6a11cb;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-/* Сама карусель */
 .rec-carousel {
     display: flex;
-    gap: 1.2rem; /* расстояние между карточками ~1.2см */
+    gap: 10px;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 10px 0;
 }
-
 .rec-card {
-    flex: 0 0 240px; /* шире карточки */
+    flex: 0 0 180px;
     background: #f8f9fa;
     border-radius: 12px;
-    padding: 12px;
+    padding: 8px;
     text-align: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-
 .rec-card img {
     width: 100%;
-    height: 160px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 8px;
+    border-radius: 8px;
+    margin-bottom: 5px;
 }
-
 .rec-card a {
     display: block;
     font-weight: 600;
     color: #2575fc;
     text-decoration: none;
-    font-size: 1rem;
-    text-overflow: ellipsis;
+    font-size: 0.9rem;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
-
 .rec-card span {
     display: block;
     font-weight: 600;
-    margin-top: 5px;
+    margin-top: 3px;
     color: #28a745;
 }
 
-.rec-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-}
-
-/* Стрелки карусели */
 .rec-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(255,255,255,0.8);
     border: none;
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: #6a11cb;
     cursor: pointer;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    transition: background 0.3s;
+    width: 35px;
+    height: 35px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     z-index: 10;
 }
+.rec-arrow.left { left: -15px; }
+.rec-arrow.right { right: -15px; }
+.rec-carousel::-webkit-scrollbar { display: none; }
 
-.rec-arrow:hover {
-    background: rgba(106,17,203,0.9);
-    color: #fff;
+@media (max-width: 768px) {
+    .rec-card { flex: 0 0 150px; }
+    .rec-card img { height: 100px; }
 }
-
-.rec-arrow.left { left: -20px; }
-.rec-arrow.right { right: -20px; }
-
-/* Убираем скроллбар */
-.rec-carousel::-webkit-scrollbar {
-    display: none;
-}
-
 </style>
 </head>
 <body>
 
-<!-- Кнопка Главная по центру -->
-
-<a href="{% url 'home' %}" class="btn-home-center">🏠 Главная</a>
+<a href="{% url 'home' %}" class="btn-home-center">🏠 Bosh sahifa</a>
 
 <div class="product-detail">
-    <!-- Информация об авторе и времени создания -->
-    <div class="product-meta text-center mb-3">
-        <span>Создано: <b>{{ cosmetic.created_by.username }}</b></span> |
+    <div class="product-meta mb-2">
+        <span>Yaratdi: <b>{{ cosmetic.created_by.username }}</b></span> |
         <span>{{ cosmetic.created_at|date:"d M Y, H:i" }}</span>
     </div>
 
     <h1>{{ cosmetic.title }}</h1>
     <img src="{{ cosmetic.image.url }}" alt="{{ cosmetic.title }}">
     <p>{{ cosmetic.description }}</p>
-    <p class="price">Цена: ${{ cosmetic.price }}</p>
+    <p class="price">Narx: ${{ cosmetic.price }}</p>
 
-    <!-- Лайк -->
+    <!-- Like -->
     <form method="post" class="like-form" action="{% url 'toggle_like' cosmetic.id %}">
         {% csrf_token %}
         <button type="submit" class="like-button {% if has_liked %}liked{% endif %}">
@@ -248,9 +209,9 @@ h1 {
         </button>
     </form>
 
-    <!-- Комментарии -->
+    <!-- Izohlar -->
     <div class="comments">
-        <h3>Комментарии ({{ comments.count }})</h3>
+        <h3>Izohlar ({{ comments.count }})</h3>
         <ul class="list-group mb-3">
             {% for comment in comments %}
             <li class="list-group-item">
@@ -259,94 +220,56 @@ h1 {
                 <small class="text-muted">{{ comment.created_at }}</small>
             </li>
             {% empty %}
-            <li class="list-group-item">Пока нет комментариев.</li>
+            <li class="list-group-item">Hozircha izoh yo‘q.</li>
             {% endfor %}
         </ul>
-        <script>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <textarea name="text" class="form-control" placeholder="Izoh qoldiring" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Yuborish</button>
+        </form>
+    </div>
+
+    <!-- Tavsiyalar -->
+    <div class="recommendations">
+        <h6>Tavsiyalar</h6>
+        <div class="rec-carousel-container">
+            <button class="rec-arrow left">&#10094;</button>
+            <div class="rec-carousel">
+                {% for rec in cosmetic.recommendations.all %}
+                <div class="rec-card">
+                    {% if rec.image %}
+                    <img src="{{ rec.image.url }}" alt="{{ rec.title }}">
+                    {% else %}
+                    <img src="{% static 'images/no-image.png' %}" alt="{{ rec.title }}">
+                    {% endif %}
+                    <a href="{% url 'cosmetic_detail' rec.id %}" title="{{ rec.title }}">{{ rec.title }}</a>
+                    <span>$ {{ rec.price }}</span>
+                </div>
+                {% empty %}
+                <p>Shunga o‘xshash mahsulotlar yo‘q</p>
+                {% endfor %}
+            </div>
+            <button class="rec-arrow right">&#10095;</button>
+        </div>
+    </div>
+</div>
+
+<script>
 const carousel = document.querySelector('.rec-carousel');
 const btnLeft = document.querySelector('.rec-arrow.left');
 const btnRight = document.querySelector('.rec-arrow.right');
 
 btnLeft.addEventListener('click', () => {
-    carousel.scrollBy({ left: -260, behavior: 'smooth' }); // листаем назад
+    carousel.scrollBy({ left: -200, behavior: 'smooth' });
 });
 btnRight.addEventListener('click', () => {
-    carousel.scrollBy({ left: 260, behavior: 'smooth' }); // листаем вперёд
+    carousel.scrollBy({ left: 200, behavior: 'smooth' });
 });
-</script>
 
-<!-- Рекомендации -->
-<div class="recommendations">
-    <h6>Рекомендации</h6>
-    <div class="rec-carousel-container">
-        <button class="rec-arrow left">&#10094;</button>
-        <div class="rec-carousel">
-            {% for rec in cosmetic.recommendations.all %}
-                <div class="rec-card">
-                    {% if rec.image %}
-                        <img src="{{ rec.image.url }}" alt="{{ rec.title }}">
-                    {% else %}
-                        <img src="{% static 'images/no-image.png' %}" alt="{{ rec.title }}">
-                    {% endif %}
-                    <a href="{% url 'cosmetic_detail' rec.id %}" title="{{ rec.title }}">
-                        {{ rec.title }}
-                    </a>
-                    <span>$ {{ rec.price }}</span>
-                </div>
-            {% empty %}
-                <p>Похожих товаров пока нет</p>
-            {% endfor %}
-        </div>
-        <button class="rec-arrow right">&#10095;</button>
-    </div>
-</div>
-<form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <textarea name="text" class="form-control" placeholder="Оставьте комментарий" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Отправить</button>
-        </form>
-    </div>
-</div>
-
-<style>
-
-/* Элегантная кнопка "Главная" */
-.btn-home-center {
-    display: inline-block;
-    text-align: center;
-    margin: 20px auto;
-    background: linear-gradient(135deg, #6a11cb, #2575fc); /* стильный синий-фиолетовый градиент */
-    color: #fff;
-    font-weight: 600;
-    padding: 10px 25px;
-    border-radius: 30px;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    font-size: 1rem;
-}
-.btn-home-center:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-    background: linear-gradient(135deg, #2575fc, #6a11cb);
-}
-
-/* Информация об авторе */
-.product-meta {
-    font-size: 0.9rem;
-    color: #555;
-}
-.product-meta b {
-    color: #6a11cb; /* акцент на имя автора */
-}
-
-</style>
-
-
-<script>
 const likeForm = document.querySelector('.like-form');
 likeForm.addEventListener('submit', function(event){
     event.preventDefault();

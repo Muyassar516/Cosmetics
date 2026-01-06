@@ -60,21 +60,21 @@ def register(request):
 
     return render(request,'accounts/register.html',{'form':form})
 
-def login_view(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                auth_login(request, user)
-                return redirect('get')
-            else:
-                form.add_error(None, "Username yoki parol noto'g'ri")
-    else:
-        form = LoginForm()
-    return render(request, 'accounts/login.html', {'form': form})
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
+#             user = authenticate(request, username=username, password=password)
+#             if user is not None:
+#                 auth_login(request, user)
+#                 return redirect('get')
+#             else:
+#                 form.add_error(None, "Username yoki parol noto'g'ri")
+#     else:
+#         form = LoginForm()
+#     return render(request, 'accounts/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
@@ -214,3 +214,22 @@ def home(request):
         'page_obj': page_obj,
         'categories': categories,
     })
+
+
+# accounts/views.py
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from .form import CustomLoginForm
+
+
+def login_view(request):
+    if request.method == "POST":
+        form = CustomLoginForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')  # logindan keyin qayerga o'tishi kerak
+    else:
+        form = CustomLoginForm()
+
+    return render(request, 'accounts/login.html', {'form': form})

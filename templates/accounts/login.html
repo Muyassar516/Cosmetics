@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ru">
+<html lang="uz">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sorya | Kirsh</title>
+<title>Sorya | Kirish</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
     body {
@@ -79,17 +79,22 @@
         text-align: center;
     }
 
-    .auth-right form p {
+    .auth-right .form-group {
         margin-bottom: 15px;
     }
 
-    .auth-right input, .auth-right button {
+    .auth-right label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .auth-right input {
         width: 100%;
         padding: 12px 15px;
         border-radius: 12px;
         border: 1px solid #ddd;
         font-size: 16px;
-        margin-bottom: 15px;
     }
 
     .auth-right input:focus {
@@ -99,9 +104,13 @@
     }
 
     .auth-right button {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 12px;
+        border: none;
         background: linear-gradient(135deg, #ffdde1, #ee9ca7);
         color: #fff;
-        border: none;
+        font-size: 16px;
         cursor: pointer;
         transition: all 0.3s ease;
     }
@@ -134,6 +143,14 @@
             min-height: 250px;
         }
     }
+
+    /* errorlar */
+    .errors {
+        color: red;
+        margin-bottom: 15px;
+        list-style: none;
+        padding-left: 0;
+    }
 </style>
 </head>
 <body>
@@ -157,11 +174,42 @@
             {% endif %}
         {% else %}
             <h2>Kirish</h2>
+
+            {% if form.errors %}
+            <ul class="errors">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
             <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Foydalanuvchi nomi</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Parol</label>
+                    {{ form.password }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.captcha.id_for_label }}">Rasmdagi so‘zni yozing</label>
+                    {{ form.captcha }}
+                    <small style="color:#555; display:block; margin-top:3px;">Rasmda ko‘rsatilgan harflarni yozing</small>
+                </div>
+
                 <button type="submit">Kirish</button>
             </form>
+
             <div class="extra">
                 Akkaunt yo'qmi? <a href="{% url 'register' %}">Ro'yhatdan o'tish</a>
             </div>

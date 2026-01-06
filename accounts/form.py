@@ -1,4 +1,6 @@
 from captcha.fields import CaptchaField
+from django.contrib.auth.forms import AuthenticationForm
+
 from .models import CustomUser, Profile, RoleChoice
 from django import forms
 
@@ -41,6 +43,23 @@ class ProfileForm(forms.ModelForm):
         fields = ['nickname', 'bio', 'email', 'image']
 
 
+class CustomLoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label="Foydalanuvchi nomi",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Foydalanuvchi nomi'
+        })
+    )
+    password = forms.CharField(
+        label="Parol",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Parol'
+        })
+    )
+    captcha = CaptchaField(label="Rasmdagi so‘zni yozing")
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=40)
     password = forms.CharField(widget=forms.PasswordInput, max_length=50)
@@ -60,12 +79,20 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['nickname', 'image', 'bio']
+        labels = {
+            'nickname': "Nomingiz",
+            'image': "Profil rasmi",
+            'bio': "Bio (o'zingiz haqida qisqacha)"
+        }
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['email', 'phone_number']
-
+        labels = {
+            'email': "Email manzilingiz",
+            'phone_number': "Telefon raqamingiz"
+        }
 
 
 class UserForm(forms.ModelForm):
