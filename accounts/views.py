@@ -31,35 +31,29 @@ def favorites_view(request):
     profile = request.user.profile  # <- обязательно через profile
     favorites = profile.favorites.all()
     return render(request, 'accounts/favorites.html', {'favorites': favorites})
-
 def register(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-
-            # НЕ СОЗДАЁМ Profile вручную! Сигнал уже создаст его.
-
-            # Сохраняем дополнительные поля в profile
+            user = form.save()  # пароль будет хеширован
+            # сохраняем profile автоматически через сигнал
             profile = user.profile
-            profile.role = request.POST.get('role')
-            profile.first_name = request.POST.get('first_name')
-            profile.last_name = request.POST.get('last_name', '')
-            profile.email = request.POST.get('email')
-            profile.phone = request.POST.get('phone', '')
+            profile.role = form.cleaned_data['role']
+            profile.first_name = form.cleaned_data.get('first_name', '')
+            profile.last_name = form.cleaned_data.get('last_name', '')
+            profile.email = form.cleaned_data.get('email', '')
+            profile.phone = form.cleaned_data.get('phone_number', '')
             profile.save()
-            user = authenticate(username=user.username, password=form.cleaned_data['password'])
-            if user is not None:
-                auth_login(request, user)
 
+            # Авторизация
+            user = authenticate(username=user.username, password=form.cleaned_data['password'])
+            if user:
+                auth_login(request, user)
             return redirect('get')
     else:
         form = UserForm()
 
-    return render(request,'accounts/register.html',{'form':form})
-
+    return render(request, 'accounts/register.html', {'form': form})
 # def login_view(request):
 #     if request.method == 'POST':
 #         form = LoginForm(request.POST)

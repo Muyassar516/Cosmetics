@@ -166,59 +166,44 @@ button:hover {
         <input type="email" id="buyer_email" name="email" placeholder="muyassar@gmail.com" class="form-control">
     </div>
 </div>
+
         <!-- SELLER -->
 <div id="seller-fields" style="display:none;">
-
     <div class="form-group">
         <label for="first_name">Ismingiz</label>
-        <input
-            type="text"
-            id="first_name"
-            name="first_name"
-            placeholder="Muyassar"
-            class="form-control"
-        >
+        <input type="text" id="first_name" name="first_name" placeholder="Muyassar" class="form-control">
     </div>
 
     <div class="form-group">
         <label for="last_name">Familiyangiz</label>
-        <input
-            type="text"
-            id="last_name"
-            name="last_name"
-            placeholder="Mirzaahmedova"
-            class="form-control"
-        >
+        <input type="text" id="last_name" name="last_name" placeholder="Mirzaahmedova" class="form-control">
     </div>
 
     <div class="form-group">
         <label for="email">Email</label>
-        <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="muyassar@gmail.com"
-            class="form-control"
-        >
+        <input type="email" id="email" name="email" placeholder="muyassar@gmail.com" class="form-control">
     </div>
 
     <div class="form-group">
-        <label for="phone">Telefon raqam</label>
-        <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="+998901234567"
-            class="form-control"
-        >
+        <label for="phone_number">Telefon raqam</label>
+    <input type="tel" id="phone_number" name="phone_number" placeholder="901234567" class="form-control" maxlength="9">
     </div>
-
 </div>
 
 
         <button type="submit">Ro‘yxatdan o‘tish</button>
     </form>
 </div>
+<script>
+const form = document.querySelector('form');
+const phoneInput = document.getElementById('phone_number');
+
+form.addEventListener('submit', function(e){
+    if(phoneInput.value && !phoneInput.value.startsWith('+998')){
+        phoneInput.value = '+998' + phoneInput.value.replace(/^0+/, '');
+    }
+});
+</script>
 
 <script>
 function showBuyer() {
